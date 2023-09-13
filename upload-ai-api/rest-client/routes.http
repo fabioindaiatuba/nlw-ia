@@ -1,0 +1,36 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name get-prompts
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="som_test.mp3"
+Content-Type: audio/mpeg
+
+< ./som_test.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+###
+
+# @name create-transcription
+POST http://localhost:3333/videos/1858cc37-3ca7-473b-8363-0cfb8dde1e1c/transcription
+Content-Type: application/json
+
+{
+  "prompt": "vozes, efeitos sonoros"
+}
+###
+
+# @name generate-ia-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+  "videoId": "1858cc37-3ca7-473b-8363-0cfb8dde1e1c",
+  "temperature": 0.5,
+  "template": "Gere um resumo sucinto da transcrição do video informada a seguir: '''{transcription}'''"
+}
+###
